@@ -7,6 +7,7 @@
         packageFormat: /^[a-zA-Z0-9@\/][a-zA-Z0-9@\/\.\-_]*$/,
         versionFormat: /^[0-9]+\.[0-9]+[0-9+a-zA-Z\.\-]+$/,
         urlFormat    : /^https*:\/\/[a-z.\-0-9]+/,
+        dependencyFormat: /^(file|https?|git(\+(ssh|https?))?):+|^([a-z0-9](?:-?[a-z0-9]){0,38})\/([a-z0-9_-]+)(#.+)?$/, // file: http: https: git: git+ssh: git+http: git+https:
         emailFormat  : /\S+@\S+/ // I know this isn't thorough. it's not supposed to be.
     };
 
@@ -230,7 +231,7 @@
     PJV.isValidVersionRange = function (v) {
         // https://github.com/isaacs/npm/blob/master/doc/cli/json.md#dependencies
         return  (/^[\^<>=~]{0,2}[0-9.x]+/).test(v) ||
-                PJV.urlFormat.test(v) ||
+                PJV.dependencyFormat.test(v) ||
                 v == "*" ||
                 v === "" ||
                 (v.indexOf && v.indexOf("git") === 0) ||
